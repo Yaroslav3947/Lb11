@@ -170,7 +170,7 @@ int getRows() {
     std::cin >> rows;
     return rows;
 }
-int getColomns() {
+int getColumns() {
     int columns;
     std::cout << "Enter the number of columns: ";
     std::cin >> columns;
@@ -185,7 +185,7 @@ int main() {
         switch (option) {
             case CREATE: {
                 rows = getRows();
-                colomns = getColomns();
+                columns = getColumns();
                 array = createArray(rows, columns);
                 break;
             }
