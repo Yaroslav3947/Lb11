@@ -1,8 +1,5 @@
-#include <iostream>
-#include <cstdlib>
 #include <ctime>
-
-using namespace std;
+#include <iostream>
 
 enum Option {
     CREATE = 1,
@@ -18,98 +15,98 @@ enum Option {
 };
 
 int **createArray(int rows, int columns) {
-    int **arr = new int *[rows];
+    int **array = new int *[rows];
     for (int i = 0; i < rows; i++) {
-        arr[i] = new int[columns];
+        array[i] = new int[columns];
     }
-    return arr;
+    return array;
 }
 
 void fillArray(int **array, int rows, int columns) {
-    srand(time(0));
+    srand(time(NULL));
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            // arr[i][j] = rand() % 21 - 10;
+            // array[i][j] = rand() % 21 - 10;
             std::cin >> array[i][j];
         }
     }
 }
 
-void printArray(int **arr, int rows, int columns) {
+void printArray(int **array, int rows, int columns) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            std::cout << arr[i][j] << " ";
+            std::cout << array[i][j] << " ";
         }
-        std::cout << endl;
+        std::cout << std::endl;
     }
 }
 
-void clearArray(int **arr, int rows){
+void clearArray(int **array, int rows){
     for (int i = 0; i < rows; i++) {
-        delete[] arr[i];
+        delete[] array[i];
     }
-    delete[] arr;
+    delete[] array;
 }
 
-int minArray(int **arr, int rows, int columns) {
-    int min = arr[0][0];
+int minArray(int **array, int rows, int columns) {
+    int min = array[0][0];
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            if (arr[i][j] < min) {
-                min = arr[i][j];
+            if (array[i][j] < min) {
+                min = array[i][j];
             }
         }
     }
     return min;
 }
 
-int maxArray(int **arr, int rows, int columns) {
-    int max = arr[0][0];
+int maxArray(int **array, int rows, int columns) {
+    int max = array[0][0];
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            if (arr[i][j] > max) {
-                max = arr[i][j];
+            if (array[i][j] > max) {
+                max = array[i][j];
             }
         }
     }
     return max;
 }
 
-double avgArray(int **arr, int rows, int columns) {
+double avgArray(int **array, int rows, int columns) {
     int sum = 0;
-    int elements = rows * columns;
+    int numberOfElements = rows * columns;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            sum += arr[i][j];
+            sum += array[i][j];
         }
     }
-    return (double)sum / elements;
+    return static_cast<double>(sum) / numberOfElements;
 }
 
-int **negArray(int **arr, int rows, int columns, int &negRows) {
-    int negCount = 0;
+int **negArray(int **array, int rows, int columns, int &negRows) {
+    int countOfNegativeNumbers = 0;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            if (arr[i][j] < 0) {
-                negCount++;
+            if (array[i][j] < 0) {
+                countOfNegativeNumbers++;
             }
         }
     }
-int** negArr = createArray(rows, negCount);
+    int **negativeArray = createArray(rows, countOfNegativeNumbers);
     int index = 0;
     for(int i = 0; i < rows; i++) {
-        negCount = 0;
+        countOfNegativeNumbers = 0;
         for (int j = 0; j < columns; j++) {
-            if (arr[i][j] < 0) {
-                negArr[i][negCount++] = arr[i][j];
+            if (array[i][j] < 0) {
+                negativeArray[i][countOfNegativeNumbers++] = array[i][j];
             }
         }
-        if (negCount > 0) {
+        if (countOfNegativeNumbers > 0) {
             index++;
         }
     }
     negRows = index;
-    return negArr;
+    return negativeArray;
 }
 
 int **sumNegArray(int **array, int rows, int columns, int &sumRows) {
@@ -141,8 +138,8 @@ int **sumNegArray(int **array, int rows, int columns, int &sumRows) {
             sumArr[index][0] = rowSums[i];
             sumArr[index][1] = negCounts[i];
             index++;
-            }
         }
+    }
     sumRows = index;
     delete[] rowSums;
     delete[] negCounts;
@@ -160,70 +157,78 @@ void showPosibilities() {
     std::cout << "9. Create a new array from the sum of all negative elements of each row\n";
     std::cout << "10. Exit\n";
 }
-Option getChoice() {
+Option getOption() {
     int option{};
     showPosibilities();
     std::cout << "Enter option:";
     std::cin >> option;
     return static_cast<Option>(option);
 }
+int getRows() {
+    int rows;
+    std::cout << "Enter the number of rows: ";
+    std::cin >> rows;
+    return rows;
+}
+int getColomns() {
+    int columns;
+    std::cout << "Enter the number of columns: ";
+    std::cin >> columns;
+    return columns;
+}
 int main() {
     int rows, columns;
-    int** arr;
-  
+    int **array;
     Option option;
-    
     do {
-        option = getChoice();
+        option = getOption();
         switch (option) {
             case CREATE: {
-                std::cout << "Enter the number of rows: ";
-                std::cin >> rows;
-                std::cout << "Enter the number of columns: ";
-                std::cin >> columns;
-                arr = createArray(rows, columns);
+                rows = getRows();
+                colomns = getColomns();
+                array = createArray(rows, columns);
                 break;
             }
             case FILL: {
-                fillArray(arr, rows, columns);
+                fillArray(array, rows, columns);
                 break;
             }
             case PRINT: {
-                printArray(arr, rows, columns);
+                printArray(array, rows, columns);
                 break;
             }
             case CLEAR: {
-                clearArray(arr,rows);
+                clearArray(array,rows);
                 break;
             }
             case MIN: {
-                std::cout << "The minimum value of the array is: " << minArray(arr, rows, columns) << endl;
+                std::cout << "The minimum value of the array is: " << minArray(array, rows, columns) << std::endl;
             break;
             }
             case MAX: {
-                std::cout << "The maximum value of the array is: " << maxArray(arr, rows, columns) << endl;
+                std::cout << "The maximum value of the array is: " << maxArray(array, rows, columns) << std::endl;
                 break;
             }
             case AVG: {
-                std::cout << "The average arithmetic value of the array is: " << avgArray(arr, rows, columns) << endl;
+                std::cout << "The average arithmetic value of the array is: " << avgArray(array, rows, columns) << std::endl;
                 break;
             }
             case NEG: {
                 int negRows;
-                int **negArr = negArray(arr, rows, columns, negRows);
-                std::cout << "The new array that contains all its negative elements: " << endl;
-                printArray(negArr, negRows, columns);
+                int **negativeArray = negArray(array, rows, columns, negRows);
+                std::cout << "The new array that contains all its negative elements: " << std::endl;
+                printArray(negativeArray, negRows, columns);
                 break;
             }
             case SUM_NEG: {
                 int sumRows;
-                int **sumArr = sumNegArray(arr, rows, columns, sumRows);
-                std::cout << "The new array from the sum of all negative elements of each row: " << endl;
+                int **sumArr = sumNegArray(array, rows, columns, sumRows);
+                std::cout << "The new array from the sum of all negative elements of each row: " << std::endl;
                 printArray(sumArr, sumRows, 2);
                 break;
             }
             default: {
-                std::cout << "Invalid option" << endl;
+                std::cout << "Invalid option" << std::endl;
             }
         }
     } while(option != EXIT);
