@@ -26,8 +26,8 @@ void fillArray(int **array, int rows, int columns) {
     srand(time(NULL));
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            // array[i][j] = rand() % 21 - 10;
-            std::cin >> array[i][j];
+            array[i][j] = rand() % 21 - 10;
+            // std::cin >> array[i][j];
         }
     }
 }
@@ -35,7 +35,7 @@ void fillArray(int **array, int rows, int columns) {
 void printArray(int **array, int rows, int columns) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            std::cout << array[i][j] << " ";
+            std::cout  << " " << array[i][j] << " ";
         }
         std::cout << std::endl;
     }
@@ -99,6 +99,8 @@ int **negArray(int **array, int rows, int columns, int &negRows) {
         for (int j = 0; j < columns; j++) {
             if (array[i][j] < 0) {
                 negativeArray[i][countOfNegativeNumbers++] = array[i][j];
+            } else {
+                negativeArray[i][countOfNegativeNumbers++] = 0;
             }
         }
         if (countOfNegativeNumbers > 0) {

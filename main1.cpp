@@ -1,3 +1,4 @@
+#include <ctime>
 #include <iostream>
 
 int *createArray(int &size) {
@@ -8,8 +9,10 @@ int *createArray(int &size) {
 }
 
 void fillArray(int *array, int size) {
+    srand(time(NULL));
     std::cout << "Enter the elements of the array: ";
     for (int i = 0; i < size; i++) {
+        // array[i][j] = rand() % 21 - 10;
         std::cin >> array[i];
     }
 }
@@ -17,7 +20,7 @@ void fillArray(int *array, int size) {
 void printArray(int *array, int size) {
     std::cout << "[";
     for (int i = 0; i < size; i++) {
-        std::cout << array[i] << " ";
+        std::cout << *(array + i) << " ";
     }
     std::cout << "]" << std::endl;
 }
@@ -47,8 +50,8 @@ int findMax(int *array, int size) {
     return max;
 }
 
-float findAverage(int *array, int size) {
-    float sum = 0;
+double findAverage(int *array, int size) {
+    double sum = 0;
     for (int i = 0; i < size; i++) {
         sum += array[i];
     }
